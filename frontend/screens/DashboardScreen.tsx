@@ -1,20 +1,30 @@
+// screens/DashboardScreen.tsx
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
+import Card from '../components/Card';
 
-const DashboardScreen = () => {
+export default function DashboardScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Dashboard </Text>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Card 
+        title="Current Temperature"
+        content="72°F"
+      />
+      <Card 
+        title="Today's Forecast"
+        content="Partly cloudy with a high of 75°F and a low of 60°F."
+      />
+      <Card 
+        title="Air Quality Index"
+        content="Moderate (50)"
+      />
+      {/* Add more cards as needed */}
+    </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 10,
   },
 });
-
-export default DashboardScreen;
