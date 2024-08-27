@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
+const weatherRoutes = require('./routes/weather');
 
 dotenv.config();
 
@@ -13,7 +14,8 @@ const app = express();
 app.use(express.json());
 
 // Define Routes
-app.use('/api', require('./routes/api'));
+app.use('/api/weather', weatherRoutes);  // Use your weather routes
+app.use('/api', require('./routes/api')); 
 
 const PORT = process.env.PORT || 5000;
 
