@@ -1,42 +1,31 @@
 // components/Card.tsx
 import React from 'react';
-import { View, Text, StyleSheet, ViewStyle } from 'react-native';
+import { View, Text } from 'react-native';
+import { styled } from 'nativewind';
+import { Ionicons } from '@expo/vector-icons';
+
+const StyledView = styled(View);
+const StyledText = styled(Text);
 
 interface CardProps {
   title: string;
   content: string;
-  style?: ViewStyle;
+  icon: keyof typeof Ionicons.glyphMap;
+  className?: string;
 }
 
-const Card: React.FC<CardProps> = ({ title, content, style }) => {
+const Card: React.FC<CardProps> = ({ title, content, icon, className }) => {
   return (
-    <View style={[styles.card, style]}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.content}>{content}</Text>
-    </View>
+    <StyledView className={`p-4 bg-white/10 rounded-lg shadow-lg mt-4 ${className}`}>
+      <StyledView className="flex-row items-center mb-2">
+        <Ionicons name={icon} size={24} color="white" />
+        <StyledText className="text-lg font-bold text-white ml-2">{title}</StyledText>
+      </StyledView>
+      <StyledView className="rounded p-3">
+        <StyledText className="text-white">{content}</StyledText>
+      </StyledView>
+    </StyledView>
   );
 };
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: '#fff',
-    padding: 15,
-    margin: 10,
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  content: {
-    fontSize: 16,
-  },
-});
 
 export default Card;

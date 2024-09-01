@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
+import { styled } from "nativewind";
 import Card from "../components/Card";
 import { getCurrentWeather, getPollenOutlook } from "../services/apiService";
 import { PollenOutlook, WeatherData } from "../types/weather";
+
+const StyledScrollView = styled(ScrollView);
+const StyledView = styled(View);
+const StyledText = styled(Text);
 
 export default function DashboardScreen() {
   const [weather, setWeather] = useState<WeatherData[] | null>(null);
@@ -36,14 +41,14 @@ export default function DashboardScreen() {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
-      </View>
+      <StyledView className="flex-1 justify-center items-center">
+        <StyledText>Loading...</StyledText>
+      </StyledView>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <StyledScrollView className="p-4 pt-6 mt-5">
       {weather && weather.length > 0 ? (
         <>
           <Card
@@ -51,6 +56,7 @@ export default function DashboardScreen() {
             content={`High: ${Math.round(
               weather[0].Temperature.Imperial.Value
             )}°F - Description of tomorrow's weather`}
+            icon="sunny"
           />
 
           <Card
@@ -78,6 +84,7 @@ export default function DashboardScreen() {
                       Indoor Humidity: ${
                         weather[0].IndoorRelativeHumidity || "N/A"
                       }%`}
+                      icon="water"
           />
 
           {pollenData && pollenData.length > 0 && (
@@ -93,18 +100,13 @@ export default function DashboardScreen() {
                   return `${pollen.Name}: ${pollen.Category}${message}`;
                 })
                 .join("\n")}
+                icon="leaf"
             />
           )}
         </>
       ) : (
-        <Text>No weather data available.</Text>
+        <StyledText>No weather data available.</StyledText>
       )}
-    </ScrollView>
+    </StyledScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-});
