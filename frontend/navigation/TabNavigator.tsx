@@ -16,12 +16,12 @@ export default function TabNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: string = "";
 
-          if (route.name === "Dash") {
-            iconName = focused ? "home-outline" : "home";
+          if (route.name === "Home") {
+            iconName = focused ? "home-outline" : "home-outline";
           } else if (route.name === "Hourly") {
-            iconName = focused ? "clock-time-four-outline" : "clock-time-four";
+            iconName = focused ? "clock-time-four-outline" : "clock-time-four-outline";
           } else if (route.name === "Daily") {
-            iconName = focused ? "calendar" : "calendar-outline";
+            iconName = focused ? "calendar" : "calendar";
           } else if (route.name === "Radar") {
             iconName = focused ? "radar" : "radar";
           }
@@ -40,7 +40,7 @@ export default function TabNavigator() {
         tabBarInactiveTintColor: "gray",
       })}
     >
-      <Tab.Screen name="Dash" component={DashboardScreen} />
+      <Tab.Screen name="Home" component={DashboardScreen} />
       <Tab.Screen name="Hourly" component={HourlyScreen} />
       <Tab.Screen name="Daily" component={DailyScreen} />
       <Tab.Screen name="Radar" component={RadarScreen} />

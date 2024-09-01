@@ -1,4 +1,3 @@
-// components/Card.tsx
 import React from 'react';
 import { View, Text } from 'react-native';
 import { styled } from 'nativewind';
@@ -13,16 +12,15 @@ interface CardProps {
   icon: keyof typeof Ionicons.glyphMap;
   className?: string;
 }
-
 const Card: React.FC<CardProps> = ({ title, content, icon, className }) => {
   return (
-    <StyledView className={`p-4 bg-white/10 rounded-lg shadow-lg mt-4 ${className}`}>
+    <StyledView className={`bg-gray-800/50 p-4 rounded-lg shadow-lg mb-4  ${className}`}>
       <StyledView className="flex-row items-center mb-2">
         <Ionicons name={icon} size={24} color="white" />
-        <StyledText className="text-lg font-bold text-white ml-2">{title}</StyledText>
+        <StyledText className="ml-2 text-lg font-bold text-white">{title}</StyledText>
       </StyledView>
-      <StyledView className="rounded p-3">
-        <StyledText className="text-white">{content}</StyledText>
+      <StyledView className="flex-row items-center">
+        <StyledText className="text-base text-white">{content}</StyledText>
       </StyledView>
     </StyledView>
   );

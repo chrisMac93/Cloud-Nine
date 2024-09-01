@@ -1,19 +1,36 @@
 const axios = require("axios");
+const WeatherData = require('../models/WeatherData');
+const { getLocationKey, getCurrentConditions, getPollenAndAllergyOutlook } = require('../utils/apiUtils');
 
 // Fetch weather data for a location
 exports.getWeather = async (req, res) => {
   const { latitude, longitude } = req.query;
 
   try {
-    const response = await axios.get(`https://api.accuweather.com/...`, {
-      params: {
-        lat: latitude,
-        lon: longitude,
-        apikey: process.env.ACCUWEATHER_API_KEY,
-      },
-    });
+    // Check if data is cached in MongoDB
+    const cachedWeather = await WeatherData.findOne({ 'data.latitude': latitude, 'data.longitude': longitude });
 
-    res.json(response.data);
+    if (cachedWeather) {
+      return res.json(cachedWeather.data);
+    }
+
+    // Fetch new data from API
+    const locationKey = await getLocationKey(latitude, longitude);
+    const currentConditions = await getCurrentConditions(locationKey);
+    const pollenData = await getPollenAndAllergyOutlook(locationKey);
+
+    const weatherData = {
+      latitude,
+      longitude,
+      currentConditions,
+      pollenData,
+    };
+
+    // Save new data to MongoDB
+    const newWeatherData = new WeatherData({ data: weatherData });
+    await newWeatherData.save();
+
+    res.json(weatherData);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

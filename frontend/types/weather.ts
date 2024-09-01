@@ -94,4 +94,7 @@ export interface WeatherData {
 //   Sun: SunMoonTimes; // Sunrise and Sunset
 //   Moon: SunMoonTimes & { Phase: MoonPhase }; // Moonrise, Moonset, and Phase
   Pollen: PollenOutlook; 
+  TomorrowWeatherText: string;
+  TodayOutlook: string;
+  TonightOutlook: string;
 }
