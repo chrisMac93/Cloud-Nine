@@ -5,6 +5,7 @@ const {
   getDailyForecastWithSunMoon,
   getAirQuality,
   getPollenAndAllergyOutlook,
+  getHourlyWeather,
 } = require("../utils/apiUtils");
 const router = express.Router();
 
@@ -59,6 +60,19 @@ router.get("/pollen", async (req, res) => {
     res
       .status(500)
       .json({ error: "Unable to fetch pollen and allergy outlook" });
+  }
+});
+
+// Route to get hourly weather data
+router.get("/hourly", async (req, res) => {
+  const { lat, lon } = req.query;
+
+  try {
+    const locationKey = await getLocationKey(lat, lon);
+    const hourlyWeather = await getHourlyWeather(locationKey);
+    res.json(hourlyWeather);
+  } catch (error) {
+    res.status(500).json({ error: "Unable to fetch hourly weather data" });
   }
 });
 

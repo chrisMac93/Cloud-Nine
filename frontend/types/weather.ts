@@ -60,6 +60,16 @@ export interface AirQualityData {
   };
 }
 
+export interface HourlyWeatherData {
+  DateTime: string;
+  Temperature: {
+    Value: number;
+    Unit: string;
+    UnitType: number;
+  };
+  condition: string;
+}
+
 export interface WeatherData {
   LocalObservationDateTime: string;
   EpochTime: number;

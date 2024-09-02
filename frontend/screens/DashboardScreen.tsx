@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
 import axios from "axios";
 import { styled } from "nativewind";
-import Card from "../components/Card";
 import SunMoonCard from "../components/SunMoonCard";
 import AirQualityCard from "../components/AirQualityCard";
 import PollenLevelsCard from "../components/PollenLevelsCard";
@@ -89,12 +88,7 @@ export default function DashboardScreen() {
       await saveToLocalStorage(CACHE_KEY_TIMESTAMP, getTimestamp());
     } catch (error) {
       console.error("Error fetching data:", error);
-      if (
-        !useMock &&
-        axios.isAxiosError(error) &&
-        error.response &&
-        error.response.status === 500
-      ) {
+      if (!useMock) {
         console.log("Switching to mock data...");
         fetchWeatherData(true);
       } else {

@@ -47,5 +47,17 @@ export const getAirQuality = async (lat: string, lon: string) => {
   } catch (error) {
     console.error("Error fetching air quality data:", error);
     throw error;
+  }     
+};
+
+export const getHourlyWeather = async (lat: string, lon: string) => {
+  try {
+    const response = await axios.get(`${API_URL}/hourly`, {
+      params: { lat, lon },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching hourly weather data:", error);
+    throw error;
   }
 };

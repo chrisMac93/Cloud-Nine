@@ -45,7 +45,7 @@ export const mockWeatherData = [
       TodayOutlook: "Clear skies throughout the day with a high of 75°F.",
       TonightOutlook: "Clear and cool with a low of 55°F.",
     },
-  ];
+];
   
   export const mockPollenData = [
     {
@@ -85,3 +85,22 @@ export const mockWeatherData = [
       co: 0.4,
     },
   };
+
+  export const mockHourlyWeatherData = [
+    {
+      time: "12:00 PM",
+      temperature: 75,
+      condition: "Sunny",
+    },
+    {
+      time: "1:00 PM",
+      temperature: 77,
+      condition: "Partly Cloudy",
+    },
+    {
+      time: "2:00 PM",
+      temperature: 78,
+      condition: "Cloudy",
+    },
+    // Add more hourly data as needed
+  ];

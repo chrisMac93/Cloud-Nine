@@ -1,6 +1,6 @@
 const axios = require("axios");
 const WeatherData = require('../models/WeatherData');
-const { getLocationKey, getCurrentConditions, getPollenAndAllergyOutlook } = require('../utils/apiUtils');
+const { getLocationKey, getCurrentConditions, getPollenAndAllergyOutlook, getHourlyWeather } = require('../utils/apiUtils');
 
 // Fetch weather data for a location
 exports.getWeather = async (req, res) => {
@@ -18,12 +18,13 @@ exports.getWeather = async (req, res) => {
     const locationKey = await getLocationKey(latitude, longitude);
     const currentConditions = await getCurrentConditions(locationKey);
     const pollenData = await getPollenAndAllergyOutlook(locationKey);
-
+    const hourlyWeather = await getHourlyWeather(locationKey);
     const weatherData = {
       latitude,
       longitude,
       currentConditions,
       pollenData,
+      hourlyWeather,
     };
 
     // Save new data to MongoDB

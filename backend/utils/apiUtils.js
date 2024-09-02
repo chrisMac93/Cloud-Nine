@@ -104,10 +104,31 @@ const getPollenAndAllergyOutlook = async (locationKey) => {
   }
 };
 
+// Function to get hourly weather data using locationKey
+const getHourlyWeather = async (locationKey) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/forecasts/v1/hourly/12hour/${locationKey}`,
+      {
+        params: {
+          apikey: ACCUWEATHER_API_KEY,
+          details: true,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching hourly weather data:", error);
+    throw error;
+  }
+};
+
+
 module.exports = {
   getLocationKey,
   getCurrentConditions,
   // getDailyForecastWithSunMoon,
   // getAirQuality,
   getPollenAndAllergyOutlook,
+  getHourlyWeather,
 };

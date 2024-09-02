@@ -3,6 +3,7 @@ import {
   mockPollenData,
   mockSunMoonData,
   mockAirQualityData,
+  mockHourlyWeatherData,
 } from "./mockData";
 
 export const getCurrentWeather = async (lat: string, lon: string) => {
@@ -33,6 +34,14 @@ export const getAirQuality = async (lat: string, lon: string) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mockAirQualityData);
+    }, 500); // Simulate network delay
+  });
+};
+
+export const getHourlyWeather = async (lat: string, lon: string) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockHourlyWeatherData);
     }, 500); // Simulate network delay
   });
 };
