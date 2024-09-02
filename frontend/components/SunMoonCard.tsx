@@ -26,7 +26,7 @@ const SunMoonCard: React.FC<SunMoonCardProps> = ({
 }) => {
   return (
     <StyledView
-      className={`bg-gray-800/50 p-4 rounded-lg shadow-lg mb-4 ${className}`}
+      className={`bg-gray-900/40 p-4 rounded-lg shadow-lg mb-4 ${className}`}
     >
       <StyledText className="text-lg font-bold text-white mb-2">
         Sun & Moon

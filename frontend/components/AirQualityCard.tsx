@@ -29,7 +29,7 @@ const AirQualityCard: React.FC<AirQualityCardProps> = ({
 }) => {
   return (
     <StyledView
-      className={`bg-gray-800/50 p-4 rounded-lg shadow-lg mb-4 ${className}`}
+      className={`bg-gray-900/40 p-4 rounded-lg shadow-lg mb-4 ${className}`}
     >
       <StyledView className="flex-row justify-between items-center mb-2">
         <StyledText className="text-lg font-bold text-white">
@@ -43,7 +43,7 @@ const AirQualityCard: React.FC<AirQualityCardProps> = ({
         The air quality is generally acceptable for most individuals. 
         However, sensitive groups may experience minor to moderate symptoms from long-term exposure .
       </StyledText>
-      <StyledTouchableOpacity className="bg-gray-700 p-2 rounded-lg flex-row items-center justify-center">
+      <StyledTouchableOpacity className="bg-gray-900 p-2 rounded-lg flex-row items-center justify-center">
         <StyledText className="text-white mr-2">See More </StyledText>
         <MaterialCommunityIcons name="arrow-right" size={16} color="white" />
       </StyledTouchableOpacity>

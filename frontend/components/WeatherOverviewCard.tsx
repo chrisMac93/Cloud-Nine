@@ -23,7 +23,7 @@ const WeatherOverviewCard: React.FC<WeatherOverviewCardProps> = ({
 }) => {
   return (
     <StyledView
-      className={`bg-gray-800/50 p-4 rounded-lg shadow-lg mb-4 ${className}`}
+      className={`bg-gray-900/40 p-4 rounded-lg shadow-lg mb-4 ${className}`}
     >
       <StyledView className="flex-row justify-between items-center mb-2">
         <StyledText className="text-lg font-bold text-white">
@@ -48,7 +48,7 @@ const WeatherOverviewCard: React.FC<WeatherOverviewCardProps> = ({
           numberOfLines={2}
           ellipsizeMode="tail"
         > Tonight:{" "}
-          {tonight}
+          {tonight} {" "}
         </StyledText>
       </StyledView>
       <StyledView className="flex-row items-center">
