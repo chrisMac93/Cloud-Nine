@@ -29,11 +29,13 @@ const PollenLevelsCard: React.FC<PollenLevelsCardProps> = ({
       {pollenData.map((pollen, index) => (
         <StyledView
           key={index}
-          className="flex-row justify-between items-center mb-2"
+          className="flex-row items-center justify-between mb-2"
         >
-          <MaterialCommunityIcons name="leaf" size={24} color="white" />
-          <StyledText className="text-white">{pollen.Name}</StyledText>
-          <StyledText className="text-white">{pollen.Category}</StyledText>
+          <StyledView className="flex-row items-center">
+            <MaterialCommunityIcons name="leaf" size={24} color="white" />
+            <StyledText className="text-white">{" "}{pollen.Name}{" "}</StyledText>
+          </StyledView>
+          <StyledText className="text-white">{pollen.Category}{" "}</StyledText>
         </StyledView>
       ))}
     </StyledView>

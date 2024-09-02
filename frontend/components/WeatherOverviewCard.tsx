@@ -7,6 +7,7 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 interface WeatherOverviewCardProps {
+  today: string;
   tonight: string;
   tomorrow: string;
   date: string;
@@ -14,6 +15,7 @@ interface WeatherOverviewCardProps {
 }
 
 const WeatherOverviewCard: React.FC<WeatherOverviewCardProps> = ({
+  today,
   tonight,
   tomorrow,
   date,
@@ -25,17 +27,39 @@ const WeatherOverviewCard: React.FC<WeatherOverviewCardProps> = ({
     >
       <StyledView className="flex-row justify-between items-center mb-2">
         <StyledText className="text-lg font-bold text-white">
-          Tonight's Weather
+          Weather Overview
         </StyledText>
         <StyledText className="text-lg font-bold text-white">{date}</StyledText>
       </StyledView>
       <StyledView className="flex-row items-center mb-2">
+        <MaterialCommunityIcons name="weather-sunny" size={24} color="white" />
+        <StyledText
+          className="text-white ml-2"
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        > Today:{" "} 
+          {today}
+        </StyledText>
+      </StyledView>
+      <StyledView className="flex-row items-center mb-2">
         <MaterialCommunityIcons name="weather-night" size={24} color="white" />
-        <StyledText className="text-white ml-2">{tonight}</StyledText>
+        <StyledText
+          className="text-white ml-2"
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        > Tonight:{" "}
+          {tonight}
+        </StyledText>
       </StyledView>
       <StyledView className="flex-row items-center">
         <MaterialCommunityIcons name="weather-sunny" size={24} color="white" />
-        <StyledText className="text-white ml-2">{tomorrow}</StyledText>
+        <StyledText
+          className="text-white ml-2"
+          numberOfLines={2}
+          ellipsizeMode="tail"
+        > Tomorrow:{" "}
+          {tomorrow}
+        </StyledText>
       </StyledView>
     </StyledView>
   );

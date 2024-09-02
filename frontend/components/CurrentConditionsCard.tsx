@@ -32,32 +32,32 @@ const CurrentConditionsCard: React.FC<CurrentConditionsCardProps> = ({
         Current Conditions
       </StyledText>
       <StyledView className="flex-row justify-between items-center mb-2">
-        <StyledText className="text-white">Temperature</StyledText>
+        <StyledText className="text-white">Temperature </StyledText>
         <StyledText className="text-white">{temperature}°</StyledText>
       </StyledView>
       <StyledView className="border-b border-gray-600 my-2" />
       <StyledView className="flex-row justify-between items-center mb-2">
-        <StyledText className="text-white">RealFeel</StyledText>
+        <StyledText className="text-white">RealFeel </StyledText>
         <StyledText className="text-white">{realFeel}°</StyledText>
       </StyledView>
       <StyledView className="border-b border-gray-600 my-2" />
       <StyledView className="flex-row justify-between items-center mb-2">
-        <StyledText className="text-white">Wind</StyledText>
+        <StyledText className="text-white">Wind </StyledText>
         <StyledText className="text-white">{wind}</StyledText>
       </StyledView>
       <StyledView className="border-b border-gray-600 my-2" />
       <StyledView className="flex-row justify-between items-center mb-2">
-        <StyledText className="text-white">Max Wind Gusts</StyledText>
-        <StyledText className="text-white">{windGust}</StyledText>
+        <StyledText className="text-white">Max Wind Gusts </StyledText>
+        <StyledText className="text-white">{windGust}{" "}</StyledText>
       </StyledView>
       <StyledView className="border-b border-gray-600 my-2" />
       <StyledView className="flex-row justify-between items-center mb-2">
-        <StyledText className="text-white">Humidity</StyledText>
+        <StyledText className="text-white">Humidity </StyledText>
         <StyledText className="text-white">{humidity}%</StyledText>
       </StyledView>
       <StyledView className="border-b border-gray-600 my-2" />
       <StyledView className="flex-row justify-between items-center mb-2">
-        <StyledText className="text-white">Indoor Humidity</StyledText>
+        <StyledText className="text-white">Indoor Humidity </StyledText>
         <StyledText className="text-white">{indoorHumidity}</StyledText>
       </StyledView>
     </StyledView>

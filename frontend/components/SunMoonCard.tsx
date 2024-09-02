@@ -33,34 +33,34 @@ const SunMoonCard: React.FC<SunMoonCardProps> = ({
       </StyledText>
       <StyledView className="flex-row justify-between items-center mb-2">
         <MaterialCommunityIcons name="weather-sunny" size={24} color="white" />
-        <StyledText className="text-white">12 hrs 58 mins</StyledText>
+        <StyledText className="text-white">12 hrs 58 mins </StyledText>
         <StyledView className="flex-row">
-          <StyledText className="text-white mr-2">Rise</StyledText>
+          <StyledText className="text-white mr-2">Rise </StyledText>
           <StyledText className="text-white">
-            {convertTo24HourFormat(sunrise)}
+            {convertTo24HourFormat(sunrise)}{" "}
           </StyledText>
         </StyledView>
         <StyledView className="flex-row">
-          <StyledText className="text-white mr-2">Set</StyledText>
+          <StyledText className="text-white mr-2">Set </StyledText>
           <StyledText className="text-white">
-            {convertTo24HourFormat(sunset)}
+            {convertTo24HourFormat(sunset)}{" "}
           </StyledText>
         </StyledView>
       </StyledView>
       <StyledView className="border-b border-gray-600 my-2" />
       <StyledView className="flex-row justify-between items-center">
         <MaterialCommunityIcons name="weather-night" size={24} color="white" />
-        <StyledText className="text-white">{phase}</StyledText>
+        <StyledText className="text-white">{phase}{" "}</StyledText>
         <StyledView className="flex-row">
-          <StyledText className="text-white mr-2">Rise</StyledText>
+          <StyledText className="text-white mr-2">Rise </StyledText>
           <StyledText className="text-white">
-            {convertTo24HourFormat(moonrise)}
+            {convertTo24HourFormat(moonrise)}{" "}
           </StyledText>
         </StyledView>
         <StyledView className="flex-row">
-          <StyledText className="text-white mr-2">Set</StyledText>
+          <StyledText className="text-white mr-2">Set </StyledText>
           <StyledText className="text-white">
-            {convertTo24HourFormat(moonset)}
+            {convertTo24HourFormat(moonset)}{" "}
           </StyledText>
         </StyledView>
       </StyledView>

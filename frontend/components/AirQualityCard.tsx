@@ -40,12 +40,11 @@ const AirQualityCard: React.FC<AirQualityCardProps> = ({
         </StyledText>
       </StyledView>
       <StyledText className="text-white mb-4">
-        The air quality is generally acceptable for most individuals. However,
-        sensitive groups may experience minor to moderate symptoms from
-        long-term exposure.
+        The air quality is generally acceptable for most individuals. 
+        However, sensitive groups may experience minor to moderate symptoms from long-term exposure .
       </StyledText>
       <StyledTouchableOpacity className="bg-gray-700 p-2 rounded-lg flex-row items-center justify-center">
-        <StyledText className="text-white mr-2">See More</StyledText>
+        <StyledText className="text-white mr-2">See More </StyledText>
         <MaterialCommunityIcons name="arrow-right" size={16} color="white" />
       </StyledTouchableOpacity>
     </StyledView>

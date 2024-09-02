@@ -3,11 +3,11 @@ import { ScrollView, Text, View } from "react-native";
 import axios from "axios";
 import { styled } from "nativewind";
 import Card from "../components/Card";
-import WeatherOverviewCard from "../components/WeatherOverviewCard";
-import CurrentConditionsCard from "../components/CurrentConditionsCard";
 import SunMoonCard from "../components/SunMoonCard";
-import PollenLevelsCard from "../components/PollenLevelsCard";
 import AirQualityCard from "../components/AirQualityCard";
+import PollenLevelsCard from "../components/PollenLevelsCard";
+import CurrentConditionsCard from "../components/CurrentConditionsCard";
+import WeatherOverviewCard from "../components/WeatherOverviewCard";
 import {
   getCurrentWeather as realGetCurrentWeather,
   getPollenOutlook as realGetPollenOutlook,
@@ -38,9 +38,9 @@ const StyledText = styled(Text);
 
 const CACHE_KEY_WEATHER = "weatherData";
 const CACHE_KEY_POLLEN = "pollenData";
-const CACHE_KEY_TIMESTAMP = "dataTimestamp";
 const CACHE_KEY_SUN_MOON = "sunMoonData";
 const CACHE_KEY_AIR_QUALITY = "airQualityData";
+const CACHE_KEY_TIMESTAMP = "dataTimestamp";
 const CACHE_EXPIRY_TIME = 30 * 60 * 1000; // 30 minutes
 
 export default function DashboardScreen() {
@@ -141,8 +141,8 @@ export default function DashboardScreen() {
 
   if (loading) {
     return (
-      <StyledView className="flex-1 justify-center items-center">
-        <StyledText>Loading...</StyledText>
+      <StyledView className="flex-1 justify-center items-center bg-gray-900">
+        <StyledText className="text-white">Loading...</StyledText>
       </StyledView>
     );
   }
@@ -159,10 +159,11 @@ export default function DashboardScreen() {
       {weather && weather.length > 0 ? (
         <>
           <WeatherOverviewCard
+            today={weather[0].TodayOutlook}
             tonight={weather[0].TonightOutlook}
             tomorrow={weather[0].TomorrowWeatherText}
             date="SUN, SEP 1"
-            className="mb-4 p-4 bg-gray-800/50 rounded shadow"
+            className="mb-4 p-4 rounded shadow"
           />
           <CurrentConditionsCard
             temperature={Math.round(weather[0].Temperature.Imperial.Value)}
@@ -173,14 +174,14 @@ export default function DashboardScreen() {
             } mph`}
             humidity={weather[0].RelativeHumidity}
             indoorHumidity={`${weather[0].IndoorRelativeHumidity || "N/A"}%`}
-            className="mb-4 p-4 bg-gray-800/50 rounded shadow"
+            className="mb-4 p-4 rounded shadow"
           />
           {airQualityData && (
             <AirQualityCard
               index={airQualityData.index}
               category={airQualityData.category}
               pollutants={airQualityData.pollutants}
-              className="mb-4 p-4 bg-gray-800/50 rounded shadow"
+              className="mb-4 p-4 rounded shadow"
             />
           )}
           {sunMoonData && (
@@ -190,13 +191,13 @@ export default function DashboardScreen() {
               moonrise={sunMoonData.moonrise}
               moonset={sunMoonData.moonset}
               phase={sunMoonData.phase}
-              className="mb-4 p-4 bg-gray-800/50 rounded shadow"
+              className="mb-4 p-4 rounded shadow"
             />
           )}
           {pollenData && pollenData.length > 0 && (
             <PollenLevelsCard
               pollenData={pollenData}
-              className="mb-4 p-4 bg-gray-800/50 rounded shadow"
+              className="mb-4 p-4 rounded shadow"
             />
           )}
           <StyledView className="h-6" />
