@@ -3,10 +3,34 @@ import { ScrollView, Text, View } from "react-native";
 import axios from "axios";
 import { styled } from "nativewind";
 import Card from "../components/Card";
-import { getCurrentWeather as realGetCurrentWeather, getPollenOutlook as realGetPollenOutlook } from "../services/apiService";
-import { getCurrentWeather as mockGetCurrentWeather, getPollenOutlook as mockGetPollenOutlook } from "../services/mockApiService";
-import { PollenOutlook, WeatherData } from "../types/weather";
-import { saveToLocalStorage, getFromLocalStorage, getTimestamp } from "../services/localStorage";
+import WeatherOverviewCard from "../components/WeatherOverviewCard";
+import CurrentConditionsCard from "../components/CurrentConditionsCard";
+import SunMoonCard from "../components/SunMoonCard";
+import PollenLevelsCard from "../components/PollenLevelsCard";
+import AirQualityCard from "../components/AirQualityCard";
+import {
+  getCurrentWeather as realGetCurrentWeather,
+  getPollenOutlook as realGetPollenOutlook,
+  getSunMoonData as realGetSunMoonData,
+  getAirQuality as realGetAirQuality,
+} from "../services/apiService";
+import {
+  getCurrentWeather as mockGetCurrentWeather,
+  getPollenOutlook as mockGetPollenOutlook,
+  getSunMoonData as mockGetSunMoonData,
+  getAirQuality as mockGetAirQuality,
+} from "../services/mockApiService";
+import {
+  PollenOutlook,
+  WeatherData,
+  SunMoonData,
+  AirQualityData,
+} from "../types/weather";
+import {
+  saveToLocalStorage,
+  getFromLocalStorage,
+  getTimestamp,
+} from "../services/localStorage";
 
 const StyledScrollView = styled(ScrollView);
 const StyledView = styled(View);
@@ -15,11 +39,17 @@ const StyledText = styled(Text);
 const CACHE_KEY_WEATHER = "weatherData";
 const CACHE_KEY_POLLEN = "pollenData";
 const CACHE_KEY_TIMESTAMP = "dataTimestamp";
+const CACHE_KEY_SUN_MOON = "sunMoonData";
+const CACHE_KEY_AIR_QUALITY = "airQualityData";
 const CACHE_EXPIRY_TIME = 30 * 60 * 1000; // 30 minutes
 
 export default function DashboardScreen() {
   const [weather, setWeather] = useState<WeatherData[] | null>(null);
   const [pollenData, setPollenData] = useState<PollenOutlook[] | null>(null);
+  const [sunMoonData, setSunMoonData] = useState<SunMoonData | null>(null);
+  const [airQualityData, setAirQualityData] = useState<AirQualityData | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [usingMockData, setUsingMockData] = useState(false);
 
@@ -30,24 +60,41 @@ export default function DashboardScreen() {
 
       console.log("Fetching weather data...");
 
-      const getCurrentWeather = useMock ? mockGetCurrentWeather : realGetCurrentWeather;
-      const getPollenOutlook = useMock ? mockGetPollenOutlook : realGetPollenOutlook;
+      const getCurrentWeather = useMock
+        ? mockGetCurrentWeather
+        : realGetCurrentWeather;
+      const getPollenOutlook = useMock
+        ? mockGetPollenOutlook
+        : realGetPollenOutlook;
+      const getSunMoonData = useMock ? mockGetSunMoonData : realGetSunMoonData;
+      const getAirQuality = useMock ? mockGetAirQuality : realGetAirQuality;
 
       const weatherData = await getCurrentWeather(lat, lon);
       const pollen = await getPollenOutlook(lat, lon);
+      const sunMoon = await getSunMoonData(lat, lon);
+      const airQuality = await getAirQuality(lat, lon);
 
       setWeather(weatherData);
       setPollenData(pollen);
+      setSunMoonData(sunMoon);
+      setAirQualityData(airQuality);
       setLoading(false);
       setUsingMockData(useMock);
 
       // Save data to local storage
       await saveToLocalStorage(CACHE_KEY_WEATHER, weatherData);
       await saveToLocalStorage(CACHE_KEY_POLLEN, pollen);
+      await saveToLocalStorage(CACHE_KEY_SUN_MOON, sunMoon);
+      await saveToLocalStorage(CACHE_KEY_AIR_QUALITY, airQuality);
       await saveToLocalStorage(CACHE_KEY_TIMESTAMP, getTimestamp());
     } catch (error) {
       console.error("Error fetching data:", error);
-      if (!useMock && axios.isAxiosError(error) && error.response && error.response.status === 500) {
+      if (
+        !useMock &&
+        axios.isAxiosError(error) &&
+        error.response &&
+        error.response.status === 500
+      ) {
         console.log("Switching to mock data...");
         fetchWeatherData(true);
       } else {
@@ -60,14 +107,26 @@ export default function DashboardScreen() {
     const loadCachedData = async () => {
       const cachedWeatherData = await getFromLocalStorage(CACHE_KEY_WEATHER);
       const cachedPollenData = await getFromLocalStorage(CACHE_KEY_POLLEN);
+      const cachedSunMoonData = await getFromLocalStorage(CACHE_KEY_SUN_MOON);
+      const cachedAirQualityData = await getFromLocalStorage(
+        CACHE_KEY_AIR_QUALITY
+      );
       const cachedTimestamp = await getFromLocalStorage(CACHE_KEY_TIMESTAMP);
 
-      if (cachedWeatherData && cachedPollenData && cachedTimestamp) {
+      if (
+        cachedWeatherData &&
+        cachedPollenData &&
+        cachedSunMoonData &&
+        cachedAirQualityData &&
+        cachedTimestamp
+      ) {
         const currentTime = getTimestamp();
         if (currentTime - cachedTimestamp < CACHE_EXPIRY_TIME) {
           console.log("Using cached data");
           setWeather(cachedWeatherData);
           setPollenData(cachedPollenData);
+          setSunMoonData(cachedSunMoonData);
+          setAirQualityData(cachedAirQualityData);
           setLoading(false);
           return;
         }
@@ -99,60 +158,53 @@ export default function DashboardScreen() {
       )}
       {weather && weather.length > 0 ? (
         <>
-          <Card
-            title="Weather Overview"
-            content={`Tomorrow: ${weather[0].TomorrowWeatherText}\n
-                      Today: ${weather[0].TodayOutlook}\n
-                      Tonight: ${weather[0].TonightOutlook}`}
-            icon="sunny"
+          <WeatherOverviewCard
+            tonight={weather[0].TonightOutlook}
+            tomorrow={weather[0].TomorrowWeatherText}
+            date="SUN, SEP 1"
+            className="mb-4 p-4 bg-gray-800/50 rounded shadow"
           />
-          <Card
-            title="Current Conditions"
-            content={`Temp: ${Math.round(
-              weather[0].Temperature.Imperial.Value
-            )}°F\n
-                      RealFeel: ${Math.round(
-                        weather[0].RealFeelTemperature.Imperial.Value
-                      )}°F\n
-                      RealFeel Shade: ${Math.round(
-                        weather[0].RealFeelTemperatureShade.Imperial.Value
-                      )}°F\n
-                      Wind: ${weather[0].Wind.Speed.Imperial.Value} mph ${
-              weather[0].Wind.Direction.Localized
-            }\n
-                      Wind Gust: ${
-                        weather[0].WindGust?.Speed.Imperial.Value || "N/A"
-                      } mph\n
-                      UV Index: ${weather[0].UVIndexText}\n
-                      Visibility: ${
-                        weather[0].Visibility.Imperial.Value
-                      } miles\n
-                      Humidity: ${weather[0].RelativeHumidity}%\n
-                      Indoor Humidity: ${
-                        weather[0].IndoorRelativeHumidity || "N/A"
-                      }%`}
-            icon="water"
+          <CurrentConditionsCard
+            temperature={Math.round(weather[0].Temperature.Imperial.Value)}
+            realFeel={Math.round(weather[0].RealFeelTemperature.Imperial.Value)}
+            wind={`${weather[0].Wind.Direction.Localized} ${weather[0].Wind.Speed.Imperial.Value} mph`}
+            windGust={`${
+              weather[0].WindGust?.Speed.Imperial.Value || "N/A"
+            } mph`}
+            humidity={weather[0].RelativeHumidity}
+            indoorHumidity={`${weather[0].IndoorRelativeHumidity || "N/A"}%`}
+            className="mb-4 p-4 bg-gray-800/50 rounded shadow"
           />
+          {airQualityData && (
+            <AirQualityCard
+              index={airQualityData.index}
+              category={airQualityData.category}
+              pollutants={airQualityData.pollutants}
+              className="mb-4 p-4 bg-gray-800/50 rounded shadow"
+            />
+          )}
+          {sunMoonData && (
+            <SunMoonCard
+              sunrise={sunMoonData.sunrise}
+              sunset={sunMoonData.sunset}
+              moonrise={sunMoonData.moonrise}
+              moonset={sunMoonData.moonset}
+              phase={sunMoonData.phase}
+              className="mb-4 p-4 bg-gray-800/50 rounded shadow"
+            />
+          )}
           {pollenData && pollenData.length > 0 && (
-            <Card
-              title="Pollen Levels"
-              content={pollenData
-                .map((pollen) => {
-                  const message =
-                    pollen.Category.toLowerCase() === "high" ||
-                    pollen.Category.toLowerCase() === "very high"
-                      ? ` - ${pollen.Text || ""}`
-                      : "";
-                  return `${pollen.Name}: ${pollen.Category}${message}`;
-                })
-                .join("\n")}
-              icon="leaf"
+            <PollenLevelsCard
+              pollenData={pollenData}
+              className="mb-4 p-4 bg-gray-800/50 rounded shadow"
             />
           )}
           <StyledView className="h-6" />
         </>
       ) : (
-        <StyledText>No weather data available.</StyledText>
+        <StyledText className="text-white">
+          No weather data available.
+        </StyledText>
       )}
     </StyledScrollView>
   );

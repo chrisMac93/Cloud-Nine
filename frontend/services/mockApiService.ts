@@ -1,4 +1,9 @@
-import { mockWeatherData, mockPollenData } from "./mockData";
+import {
+  mockWeatherData,
+  mockPollenData,
+  mockSunMoonData,
+  mockAirQualityData,
+} from "./mockData";
 
 export const getCurrentWeather = async (lat: string, lon: string) => {
   return new Promise((resolve) => {
@@ -12,6 +17,22 @@ export const getPollenOutlook = async (lat: string, lon: string) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mockPollenData);
+    }, 500); // Simulate network delay
+  });
+};
+
+export const getSunMoonData = async (lat: string, lon: string) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockSunMoonData);
+    }, 500); // Simulate network delay
+  });
+};
+
+export const getAirQuality = async (lat: string, lon: string) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(mockAirQualityData);
     }, 500); // Simulate network delay
   });
 };

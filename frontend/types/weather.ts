@@ -33,34 +33,32 @@ export interface Pressure {
 }
 
 export interface PollenOutlook {
-    Name: string;
-    Value: number;
-    Category: string;
-    Text: string;
-    // Add any other fields as needed
-  }
-// export interface SunMoonTimes {
-//   Rise: string; // Time format could be adjusted as per API response
-//   Set: string;
-// }
+  Name: string;
+  Value: number;
+  Category: string;
+  Text: string;
+}
 
-// export interface MoonPhase {
-//   Name: string;
-//   Icon: number;
-//   Code: string;
-// }
+export interface SunMoonData {
+  sunrise: string;
+  sunset: string;
+  moonrise: string;
+  moonset: string;
+  phase: string;
+}
 
-// export interface AirQuality {
-//   Value: number;
-//   Category: string;
-//   Type: string;
-// }
-
-// export interface PollenOutlook {
-//   Name: string;
-//   Value: number;
-//   Category: string;
-// }
+export interface AirQualityData {
+  index: number;
+  category: string;
+  pollutants: {
+    pm25: number;
+    pm10: number;
+    o3: number;
+    no2: number;
+    so2: number;
+    co: number;
+  };
+}
 
 export interface WeatherData {
   LocalObservationDateTime: string;
@@ -90,11 +88,10 @@ export interface WeatherData {
   UVIndexText: string;
   Visibility: Visibility;
   Pressure: Pressure;
-//   AirAndPollen: AirQuality[]; // Array to accommodate different types of air quality metrics
-//   Sun: SunMoonTimes; // Sunrise and Sunset
-//   Moon: SunMoonTimes & { Phase: MoonPhase }; // Moonrise, Moonset, and Phase
-  Pollen: PollenOutlook; 
+  Pollen: PollenOutlook;
   TomorrowWeatherText: string;
   TodayOutlook: string;
   TonightOutlook: string;
+  SunMoon: SunMoonData;
+  AirQuality: AirQualityData;
 }

@@ -64,3 +64,24 @@ export const mockWeatherData = [
       Text: "Low levels of ragweed pollen",
     },
   ];
+
+  export const mockSunMoonData = {
+    sunrise: "6:00 AM",
+    sunset: "8:00 PM",
+    moonrise: "7:00 PM",
+    moonset: "5:00 AM",
+    phase: "Waxing Crescent",
+  };
+  
+  export const mockAirQualityData = {
+    index: 42,
+    category: "Good",
+    pollutants: {
+      pm25: 12,
+      pm10: 20,
+      o3: 30,
+      no2: 15,
+      so2: 5,
+      co: 0.4,
+    },
+  };
