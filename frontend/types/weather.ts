@@ -67,6 +67,11 @@ export interface HourlyWeatherData {
     Unit: string;
     UnitType: number;
   };
+  RealFeelTemperature: {
+    Value: number;
+    Unit: string;
+    UnitType: number;
+  };
   condition: string;
 }
 
